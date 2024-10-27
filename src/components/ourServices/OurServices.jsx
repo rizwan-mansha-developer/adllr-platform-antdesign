@@ -14,15 +14,15 @@ import BgMobile from "/src/assets/OurServices/BgMobile.svg";
 
 const { useBreakpoint } = Grid;
 
-const clampStyle = {
-  overflow: "hidden",
-  display: "-webkit-box",
-  WebkitBoxOrient: "vertical",
-  WebkitLineClamp: 7,
-};
-
 const OurServices = () => {
   let screens = useBreakpoint();
+
+  const clampStyle = {
+    overflow: "hidden",
+    display: "-webkit-box",
+    WebkitBoxOrient: "vertical",
+    WebkitLineClamp: screens.lg ? 5 : screens.xl ? 7 : 5,
+  };
   const services = [
     {
       image: Cui,
@@ -64,8 +64,15 @@ const OurServices = () => {
         justifyContent: "center",
         backgroundColor: "#b08d76",
         color: "white",
-        padding: isGrid ? "32px" : screens.xs ? "32px 24px" : "32px 64px",
-        gap: screens.lg ? "64px" : "72px",
+        padding:
+          isGrid && screens.xl
+            ? "12px"
+            : screens.lg
+            ? "12px"
+            : screens.xs
+            ? "32px 24px"
+            : "32px 64px",
+        gap: screens.xxl ? "64px" : screens.lg ? "0px" : "72px",
         height: isGrid ? "100%" : "auto",
       }}
     >
@@ -73,7 +80,15 @@ const OurServices = () => {
         <Typography.Title
           level={2}
           style={{
-            fontSize: screens.sm ? "64px" : "38px",
+            fontSize: screens.xxl
+              ? "64px"
+              : screens.lg
+              ? "64px"
+              : screens.md
+              ? "64px"
+              : screens.sm
+              ? "64px"
+              : "36px",
             fontWeight: "300",
             fontFamily: "Cormorant",
             textTransform: "uppercase",
@@ -90,14 +105,21 @@ const OurServices = () => {
         <Typography
           style={{
             color: "#ffd8d0",
-            fontSize: screens.sm ? "32px" : "24px",
+            fontSize: screens.xxl
+              ? "32px"
+              : screens.lg
+              ? "32px"
+              : screens.md
+              ? "32px"
+              : screens.sm
+              ? "32px"
+              : "20px",
             lineHeight: screens.sm ? "48px" : "32px",
             fontWeight: "300",
             textTransform: "uppercase",
             fontStyle: "italic",
             fontFamily: "Cormorant",
             textAlign: "start",
-           
           }}
         >
           NA SUA PRIMEIRA VISITA
@@ -116,7 +138,7 @@ const OurServices = () => {
           style={{
             color: "white",
             textTransform: "uppercase",
-            fontSize: "2rem",
+            fontSize: screens.xs ? "24px" : "2rem",
             fontWeight: "normal",
             fontFamily: "Cormorant Garamond",
           }}
@@ -233,7 +255,7 @@ const OurServices = () => {
 
       {/* Updated Grid of services */}
       <Row
-        gutter={[16, 16]}
+        gutter={[24, 24]}
         style={{
           display: screens.md ? "flex" : "none",
           flexWrap: "wrap",
@@ -241,14 +263,14 @@ const OurServices = () => {
         }}
       >
         {services.map((service, index) => (
-          <Col key={index} style={{ padding: 0 }} span={screens.lg ? 12 : 24}>
+          <Col key={index} style={{ padding: 0 }} span={screens.xl ? 12 : 24}>
             <div style={{ display: "flex", flexDirection: "row" }}>
               <img
                 src={service.image}
                 alt={service.title}
                 style={{
-                  borderRadius: "8px",
-                  width: "340px",
+                  // borderRadius: "8px",
+                  width: screens.xxl ? "340px" : screens.lg ? "250px" : "340px",
                   height: "auto",
                   objectFit: "contain",
                 }}
@@ -265,10 +287,18 @@ const OurServices = () => {
                   style={{
                     color: "#84635C",
                     fontFamily: "cormorant",
-                    fontSize: "24px",
+                    fontSize: screens.xxl
+                      ? "24px"
+                      : screens.lg
+                      ? "16px"
+                      : "24px",
                     fontWeight: "600",
                     textTransform: "uppercase",
-                    paddingBottom: "40px",
+                    paddingBottom: screens.xxl
+                      ? "40px"
+                      : screens.lg
+                      ? "24px"
+                      : "24px",
                     lineHeight: "24px",
                     textAlign: "left",
                   }}
@@ -291,8 +321,10 @@ const OurServices = () => {
           </Col>
         ))}
 
+        {screens.lg && !screens.xl ? <DiscountOffer /> : null}
+
         {/* Discount offer integrated into grid on lg screens */}
-        {screens.lg && (
+        {screens.xl && (
           <Col span={12} style={{ padding: 0 }}>
             <div style={{ height: "100%" }}>
               <DiscountOffer isGrid={true} />
@@ -304,7 +336,7 @@ const OurServices = () => {
       {/* Mobile pagination remains unchanged */}
       <Row
         style={{
-          display: screens.xs ? "flex" : "none",
+          display: screens.xs || (screens.sm && !screens.md) ? "flex" : "none",
           justifyContent: "space-between",
           alignItems: "center",
           margin: "16px 0",

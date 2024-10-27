@@ -47,7 +47,7 @@ const Navbar = () => {
           backgroundColor: appBarColor,
           transition: "background-color 0.3s ease",
           boxShadow: "none",
-          width: screens.lg ? "100%" : "90%",
+
           position: "fixed",
           zIndex: 1,
           paddingLeft: screens.xxl
@@ -68,7 +68,7 @@ const Navbar = () => {
               ? "35px"
               : screens.lg
               ? "25px"
-              : "17px",
+              : "0px",
           }}
           justify="space-between"
           align="middle"
