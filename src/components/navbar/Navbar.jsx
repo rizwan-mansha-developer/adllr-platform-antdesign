@@ -21,6 +21,8 @@ const StyledHeader = styled(Header)`
       ? "0 2px 8px rgba(0, 0, 0, 0.15)"
       : "none"};
   position: fixed;
+  left: "0";
+  right: "0";
   z-index: 1000;
   padding: ${(props) =>
     props.$screens.xxl

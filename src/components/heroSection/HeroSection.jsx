@@ -88,7 +88,7 @@ const HeroSection = () => {
             ? "15px"
             : "10px",
           width: "100%",
-          maxWidth: "1440px", // Limit the width for large screens
+          // maxWidth: "1440px", 
         }}
       >
         {/* Title */}
@@ -105,12 +105,15 @@ const HeroSection = () => {
               : screens.md
               ? "80px"
               : screens.sm
-              ? "70px"
-              : "52px",
-            lineHeight: "110px", // Maintain consistent line height
+              ? "52px"
+              : screens.xs
+              ? "42px"
+              : "42px",
+            lineHeight: "110px",
             fontWeight: 300,
             fontFamily: "cormorant",
             textAlign: screens.md ? "start" : "center",
+            letterSpacing: "-1%",
           }}
         >
           CABELO SEDOSO
@@ -122,7 +125,7 @@ const HeroSection = () => {
             color: "white",
             fontFamily: "cormorant",
             width: "100%",
-            maxWidth: "634px", // Limit the width of the text for readability
+            maxWidth: "634px", 
             marginBottom: screens.xxl ? "64px" : "24px",
             textTransform: "uppercase",
             fontWeight: 400,
@@ -180,7 +183,7 @@ const HeroSection = () => {
         >
           <HeroSlider SliderContent={SliderContent} />
         </div>
-        <div
+        {/* <div
           style={{
             paddingTop: screens.xxl
               ? "200px"
@@ -188,13 +191,13 @@ const HeroSection = () => {
               ? "30px"
               : screens.lg
               ? "50px"
-              : "35px",
+              : "35px",i
             display: screens.xxl ? "block" : "block",
             width: screens.lg ? "774px" : screens.xxl && "826px",
           }}
         >
           <ImagesGrid SliderContent={SliderContent} />
-        </div>
+        </div> */}
       </div>
     </div>
   );

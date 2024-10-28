@@ -9,7 +9,6 @@ import Testimonials from "./components/testimonials/Testimonials";
 import FollowUs from "./components/followUs/FollowUs";
 import Offers from "./components/offer/Offer";
 
-
 function App() {
   return (
     <div>
@@ -19,7 +18,7 @@ function App() {
       <Gallery />
       <Testimonials />
       <FollowUs />
-    <Offers /> 
+      <Offers />
     </div>
   );
 }

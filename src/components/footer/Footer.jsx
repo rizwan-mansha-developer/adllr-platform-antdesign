@@ -18,12 +18,10 @@ import FbIcon from "/src/assets/Footer/FbIcon.svg";
 import InstraIcon from "/src/assets/Footer/InstraIcon.svg";
 import WhatsappIcon from "/src/assets/Footer/WhatsappIcon.svg";
 
-// Components
 const { Footer: AntFooter } = Layout;
 const { Title, Text, Link } = Typography;
 const { useBreakpoint } = Grid;
 
-// Styled components with proper responsive handling
 const StyledFooter = styled(AntFooter)`
   overflow: hidden;
   background-color: #faf7f5;
@@ -40,18 +38,39 @@ const StyledFooter = styled(AntFooter)`
     if ($screens.lg) return "42px 100px";
     if ($screens.md) return "42px 50px";
     if ($screens.sm) return "50px 32px";
-    if ($screens.xs) return "50px 16px";
+    if ($screens.xs) return "16px 16px";
     return "91px 250px";
   }};
+
+  .ant-row {
+    flex-flow:${({ $screens }) => {
+      if ($screens.lg) return "row nowrap !important";
+      return "row wrap";
+    }}
+
+  .ant-col {
+    flex: ${({ $screens }) => {
+      if ($screens.lg) return "0 0 auto !important";
+      return "auto";
+    }};
+    width: ${({ $screens }) => {
+      if ($screens.lg) return "300px";
+      if ($screens.xl) return "300px";
+      if ($screens.xxl) return "auto !important";
+      return "auto";
+    }};
+    max-width: none !important;
+  }
 `;
 
 const LogoContainer = styled.div`
   display: flex;
 
-  max-width: 100%;
   gap: 20px;
   justify-content: ${({ $screens }) =>
     $screens.xl ? "auto" : "space-between"};
+  align-items: center;
+  width: 100%;
 
   .logo-icon {
     width: ${({ $screens }) => ($screens.xl ? "78px" : "79px")};
@@ -62,7 +81,13 @@ const LogoContainer = styled.div`
 
   .text-logo {
     width: ${({ $screens }) =>
-      $screens.xl ? "220px" : $screens.sm ? "123px" : "35%"};
+      $screens.xl
+        ? "220px"
+        : $screens.xs
+        ? "100px"
+        : $screens.sm
+        ? "123px"
+        : "35%"};
     height: ${({ $screens }) => ($screens.xl ? "15px" : "auto")};
     object-fit: contain;
   }
@@ -102,15 +127,24 @@ const StyledLink = styled(Link)`
 `;
 
 const MobileMenuContent = styled.div`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
   background-color: #faf7f5;
   padding: 16px 24px;
-  z-index: 10;
-  border-top: 1px solid #494040;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  border-top: 1px solid #e8e8e8;
+`;
+
+const ToggleButton = styled(Button)`
+  &.ant-btn {
+    color: #494040;
+    border: none;
+    padding: 4px 8px;
+    height: auto;
+
+    &:hover,
+    &:focus {
+      color: #666;
+      background: none;
+    }
+  }
 `;
 
 const Footer = () => {
@@ -159,57 +193,40 @@ const Footer = () => {
 
   return (
     <StyledFooter $screens={screens}>
-      { !screens.lg && (
-        <Col>
-          <LogoContainer $screens={screens}>
-            <div style={{ display: "flex" }}>
-              <img className="logo-icon" src={Logo} alt="Logo Icon" />
-              <img className="text-logo" src={TextLogo} alt="Text Logo" />
-            </div>
-
-            {!screens.lg && (
-              <Button
-                type="text"
-                icon={isMenuOpen ? <CloseOutlined /> : <MenuOutlined />}
-                onClick={toggleMenu}
-                style={{ color: "#494040" }}
-              />
-            )}
-          </LogoContainer>
-        </Col>
+      {!screens.lg && (
+        <LogoContainer $screens={screens}>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <img className="logo-icon" src={Logo} alt="Logo Icon" />
+            <img className="text-logo" src={TextLogo} alt="Text Logo" />
+          </div>
+          <ToggleButton
+            type="text"
+            icon={isMenuOpen ? <CloseOutlined /> : <MenuOutlined />}
+            onClick={toggleMenu}
+          />
+        </LogoContainer>
       )}
+
       <Row
-        style={{ flexFlow: screens.xl && "row nowrap" }}
         gutter={[
           { xs: 20, md: 40 },
           { xs: 20, md: 40 },
         ]}
       >
-        {/* Brand and Message */}
-        <Col>
-          <LogoContainer $screens={screens}>
-            {screens.lg && (
-              <div style={{ display: "flex", justifyContent:"center", alignItems:"center" }}>
+        <Col xs={24} md={8} lg={8}>
+          {screens.lg && (
+            <LogoContainer $screens={screens}>
+              <div style={{ display: "flex", alignItems: "center" }}>
                 <img className="logo-icon" src={Logo} alt="Logo Icon" />
                 <img className="text-logo" src={TextLogo} alt="Text Logo" />
               </div>
-            )}
-
-            {/* {!screens.lg && (
-              <Button
-                type="text"
-                icon={isMenuOpen ? <CloseOutlined /> : <MenuOutlined />}
-                onClick={toggleMenu}
-                style={{ color: "#494040" }}
-              />
-            )} */}
-          </LogoContainer>
+            </LogoContainer>
+          )}
           <div
             style={{
               display: "flex",
               flexDirection: "column",
               alignItems: screens.md ? "start" : "center",
-              justifyContent: "center",
             }}
           >
             <Title
@@ -229,6 +246,7 @@ const Footer = () => {
               style={{
                 width: "100%",
                 maxWidth: screens.xxl ? "340px" : "auto",
+                textAlign: screens.md ? "start" : "center",
               }}
             >
               Entre no nosso salão e deixe-nos transformar os seus sonhos de
@@ -240,6 +258,12 @@ const Footer = () => {
                   key={social.label}
                   href="#"
                   aria-label={social.label}
+                  style={{
+                    color: "#bba39b",
+                    fontSize: "12px",
+                    lineHeight: "15px",
+                    fontFamily: "mulish",
+                  }}
                 >
                   <img src={social.icon} alt={social.label} />
                 </StyledLink>
@@ -248,28 +272,37 @@ const Footer = () => {
           </div>
         </Col>
 
-        {/* Links Section - Hidden on mobile */}
         {screens.lg && (
-          <Col>
-            <StyledTitle level={5}>Links</StyledTitle>
-            {renderLinks()}
-          </Col>
+          <>
+            <Col lg={8}>
+              <StyledTitle level={5}>Links</StyledTitle>
+              {renderLinks()}
+            </Col>
+            <Col lg={8}>
+              <StyledTitle level={5}>Horário</StyledTitle>
+              {renderHours()}
+            </Col>
+          </>
         )}
 
-        {/* Hours Section - Hidden on mobile */}
-        {screens.lg && (
-          <Col md={6}>
-            <StyledTitle level={5}>Horário</StyledTitle>
-            {renderHours()}
-          </Col>
-        )}
-
-        {/* Contact Section */}
-        <Col xs={24} sm={24} md={6}>
-          <Row justify="space-between" align="middle">
-            <StyledTitle level={5}>Contact</StyledTitle>
-          </Row>
-          <Space direction="vertical" size={8} style={{ width: "100%" }}>
+        <Col xs={24} md={8}>
+          <StyledTitle
+            level={5}
+            style={{
+              width: "100%",
+              textAlign: !screens.md ? "center" : "start",
+            }}
+          >
+            Contact
+          </StyledTitle>
+          <Space
+            direction="vertical"
+            size={8}
+            style={{
+              width: "100%",
+              textAlign: !screens.md ? "center" : "start",
+            }}
+          >
             <Text>Address: Rua Aquiles Machado 5, 1900-077 Lisboa</Text>
             <Text>Phone: +123 456 7890</Text>
             <Text>WhatsApp: +123 456 7890</Text>
@@ -278,12 +311,11 @@ const Footer = () => {
         </Col>
       </Row>
 
-      {/* Mobile Menu */}
-      {!screens.md && (
+      {!screens.lg && (
         <Collapse
           activeKey={isMenuOpen ? ["1"] : []}
           ghost
-          expandIconPosition="end"
+          style={{ marginTop: 20 }}
         >
           <Collapse.Panel key="1" showArrow={false} header={null}>
             <MobileMenuContent>
@@ -302,22 +334,62 @@ const Footer = () => {
         </Collapse>
       )}
 
-      {/* Footer Bottom */}
-      <Row
-        justify="space-between"
-        align="middle"
-        style={{ marginTop: screens.xs ? 40 : 48 }}
-      >
-        <Col>
-          <Text>© PARAÍSO DAS PRINCESAS 2024</Text>
-        </Col>
-        <Col>
-          <Space split={<span style={{ margin: "0 8px" }}></span>}>
-            <StyledLink>Privacy Policy</StyledLink>
-            <StyledLink>Terms of Service</StyledLink>
-          </Space>
-        </Col>
-      </Row>
+      {/* Render as Columns on small screens */}
+      {screens.xs ||
+        (screens.sm && !screens.md && (
+          <Col
+            justify="space-between"
+            align="middle"
+            style={{
+              marginTop: 40,
+              gap: "16px",
+            }}
+          >
+            <Col order={2}>
+              <Space split={<span style={{ margin: "0 8px" }}></span>}>
+                <StyledLink style={{ color: "#BBA39B" }}>
+                  Privacy Policy
+                </StyledLink>
+                <StyledLink style={{ color: "#BBA39B" }}>
+                  Terms of Service
+                </StyledLink>
+              </Space>
+            </Col>
+            <Col order={1} style={{ marginTop: "19px" }}>
+              <Text style={{ color: "#BBA39B" }}>
+                © PARAÍSO DAS PRINCESAS 2024
+              </Text>
+            </Col>
+          </Col>
+        ))}
+
+      {/* Render as Row on medium and larger screens */}
+      {screens.md && (
+        <Row
+          justify="space-between"
+          align="middle"
+          style={{
+            marginTop: 48,
+            gap: 0,
+          }}
+        >
+          <Col order={1}>
+            <Space split={<span style={{ margin: "0 8px" }}></span>}>
+              <StyledLink style={{ color: "#BBA39B" }}>
+                Privacy Policy
+              </StyledLink>
+              <StyledLink style={{ color: "#BBA39B" }}>
+                Terms of Service
+              </StyledLink>
+            </Space>
+          </Col>
+          <Col order={2}>
+            <Text style={{ color: "#BBA39B" }}>
+              © PARAÍSO DAS PRINCESAS 2024
+            </Text>
+          </Col>
+        </Row>
+      )}
     </StyledFooter>
   );
 };

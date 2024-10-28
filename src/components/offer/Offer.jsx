@@ -43,6 +43,7 @@ const ContentWrapper = styled.div`
 
 const StyledButton = styled(Button)`
   &.ant-btn {
+    width: auto;
     border-radius: 0;
     background: #a4775e;
     height: 72px;
@@ -200,7 +201,7 @@ const Offers = () => {
           {screens.sm ? (
             <StyledButton type="primary">Fazer Marcação</StyledButton>
           ) : (
-            <div style={{ width: "100%", padding: "0 15px" }}>
+            <div style={{ width: "100%", }}>
               <StyledButton type="primary" block>
                 Fazer Marcação
               </StyledButton>
