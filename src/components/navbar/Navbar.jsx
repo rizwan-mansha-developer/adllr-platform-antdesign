@@ -75,7 +75,6 @@ const StyledMenu = styled(Menu)`
     line-height: 24px;
     height: 24px;
     margin: 0;
-    
 
     &::after {
       display: none;
@@ -121,6 +120,7 @@ const MenuButton = styled(Button)`
 
 const DrawerContent = styled.div`
   padding: 16px;
+  padding-left: 40px;
 `;
 
 const DrawerMenu = styled(Menu)`
@@ -132,11 +132,13 @@ const DrawerMenu = styled(Menu)`
     text-transform: capitalize;
     height: 48px;
     line-height: 48px;
+    padding-left: 40px;
   }
 `;
 
 const SocialIcons = styled(Row)`
   padding-top: 48px;
+  
   gap: 16px;
 `;
 
