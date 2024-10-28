@@ -60,7 +60,7 @@ const StyledFooter = styled(AntFooter)`
       return "auto";
     }};
     max-width: none !important;
-  }
+  }}
 `;
 
 const LogoContainer = styled.div`
