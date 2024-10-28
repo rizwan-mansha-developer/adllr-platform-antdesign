@@ -43,24 +43,20 @@ const StyledFooter = styled(AntFooter)`
   }};
 
   .ant-row {
-    flex-flow:${({ $screens }) => {
-      if ($screens.lg) return "row nowrap !important";
-      return "row wrap";
-    }}
+    flex-flow: ${({ $screens }) =>
+      $screens.lg ? "row nowrap !important" : "row wrap"};
 
-  .ant-col {
-    flex: ${({ $screens }) => {
-      if ($screens.lg) return "0 0 auto !important";
-      return "auto";
-    }};
-    width: ${({ $screens }) => {
-      if ($screens.lg) return "300px";
-      if ($screens.xl) return "300px";
-      if ($screens.xxl) return "auto !important";
-      return "auto";
-    }};
-    max-width: none !important;
-  }}
+    .ant-col {
+      flex: ${({ $screens }) => ($screens.lg ? "0 0 auto !important" : "auto")};
+      width: ${({ $screens }) => {
+        if ($screens.xxl) return "auto !important";
+        if ($screens.xl) return "300px";
+        if ($screens.lg) return "300px";
+        return "auto";
+      }};
+      max-width: none !important;
+    }
+  }
 `;
 
 const LogoContainer = styled.div`
@@ -206,7 +202,6 @@ const Footer = () => {
           />
         </LogoContainer>
       )}
-
       <Row
         gutter={[
           { xs: 20, md: 40 },
@@ -310,7 +305,6 @@ const Footer = () => {
           </Space>
         </Col>
       </Row>
-
       {!screens.lg && (
         <Collapse
           activeKey={isMenuOpen ? ["1"] : []}
@@ -333,36 +327,33 @@ const Footer = () => {
           </Collapse.Panel>
         </Collapse>
       )}
-
       {/* Render as Columns on small screens */}
-      {screens.xs ||
-        (screens.sm && !screens.md && (
-          <Col
-            justify="space-between"
-            align="middle"
-            style={{
-              marginTop: 40,
-              gap: "16px",
-            }}
-          >
-            <Col order={2}>
-              <Space split={<span style={{ margin: "0 8px" }}></span>}>
-                <StyledLink style={{ color: "#BBA39B" }}>
-                  Privacy Policy
-                </StyledLink>
-                <StyledLink style={{ color: "#BBA39B" }}>
-                  Terms of Service
-                </StyledLink>
-              </Space>
-            </Col>
-            <Col order={1} style={{ marginTop: "19px" }}>
-              <Text style={{ color: "#BBA39B" }}>
-                © PARAÍSO DAS PRINCESAS 2024
-              </Text>
-            </Col>
+      {(screens.xs || screens.sm) && !screens.md && (
+        <Col
+          justify="space-between"
+          align="middle"
+          style={{
+            marginTop: 40,
+            gap: "16px",
+          }}
+        >
+          <Col order={2}>
+            <Space split={<span style={{ margin: "0 8px" }}></span>}>
+              <StyledLink style={{ color: "#BBA39B" }}>
+                Privacy Policy
+              </StyledLink>
+              <StyledLink style={{ color: "#BBA39B" }}>
+                Terms of Service
+              </StyledLink>
+            </Space>
           </Col>
-        ))}
-
+          <Col order={1} style={{ marginTop: "19px" }}>
+            <Text style={{ color: "#BBA39B" }}>
+              © PARAÍSO DAS PRINCESAS 2024
+            </Text>
+          </Col>
+        </Col>
+      )}
       {/* Render as Row on medium and larger screens */}
       {screens.md && (
         <Row
