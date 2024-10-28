@@ -42,13 +42,8 @@
 }
 
 .ant-drawer-header {
-  display: none;
-  /* background-color: aqua; */
+  display: none !important;
+  background-color: aqua;
 }
 
-/* .ant-row {
-  flex-flow: row nowrap;
-  .ant-col{
-    flex:auto
-  }
-} */
+

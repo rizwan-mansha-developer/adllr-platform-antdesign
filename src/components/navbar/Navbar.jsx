@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { Layout, Menu, Button, Drawer, Typography, Row, Col, Grid } from "antd";
 import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
+import styled from "styled-components";
 import FbIcon from "../SvgIconsComp/navbarIcons/FbIcon";
 import InstraIcon from "../SvgIconsComp/navbarIcons/InstraIcon";
 import WhatsappIcon from "../SvgIconsComp/navbarIcons/WhatsappIcon";
 import LogoIcon from "../SvgIconsComp/navbarIcons/LogoIcon";
 import LogoName from "../SvgIconsComp/navbarIcons/LogoName";
 import MobileLogo from "../SvgIconsComp/navbarIcons/MobileLogo";
-import styled from "styled-components";
 
 const { useBreakpoint } = Grid;
 const { Header } = Layout;
+
+// Styled Components
+const StyledLayout = styled(Layout)`
+  .ant-drawer-content-wrapper {
+    width: 100% !important;
+  }
+`;
 
 const StyledHeader = styled(Header)`
   width: 100%;
@@ -21,34 +28,31 @@ const StyledHeader = styled(Header)`
       ? "0 2px 8px rgba(0, 0, 0, 0.15)"
       : "none"};
   position: fixed;
-  left: "0";
-  right: "0";
+  left: 0;
+  right: 0;
   z-index: 1000;
-  padding: ${(props) =>
-    props.$screens.xxl
-      ? "0 250px"
-      : props.$screens.xl
-      ? "0 150px"
-      : props.$screens.md
-      ? "0 30px"
-      : "0 15px"};
+  padding: ${(props) => {
+    if (props.$screens.xxl) return "0 250px";
+    if (props.$screens.xl) return "0 150px";
+    if (props.$screens.md) return "0 30px";
+    return "0 15px";
+  }};
   height: auto;
   line-height: normal;
 `;
 
 const NavWrapper = styled(Row)`
-  padding-top: ${(props) =>
-    props.$appBarColor !== "transparent"
-      ? "15px"
-      : props.$screens.xxl
-      ? "55px"
-      : props.$screens.xl
-      ? "35px"
-      : props.$screens.lg
-      ? "25px"
-      : "15px"};
+  padding-top: ${(props) => {
+    if (props.$appBarColor !== "transparent") return "15px";
+    if (props.$screens.xxl) return "55px";
+    if (props.$screens.xl) return "35px";
+    if (props.$screens.lg) return "25px";
+    return "15px";
+  }};
+
   padding-bottom: ${(props) =>
     props.$appBarColor !== "transparent" ? "15px" : "0"};
+
   transition: all 0.3s ease;
 `;
 
@@ -58,26 +62,27 @@ const StyledMenu = styled(Menu)`
     border-bottom: none;
     line-height: normal;
     width: 100%;
+  }
 
-    .ant-menu-item {
-      font-family: mulish;
-      font-weight: 300;
-      text-transform: capitalize;
-      color: white !important;
-      font-size: 16px;
-      padding: 0;
-      padding-right: ${(props) => (props.$screens.xxl ? "48px" : "36px")};
-      line-height: 24px;
-      height: 24px;
-      margin: 0;
+  .ant-menu-item {
+    font-family: mulish;
+    font-weight: 300;
+    text-transform: capitalize;
+    color: white !important;
+    font-size: 16px;
+    padding: 0;
+    padding-right: ${(props) => (props.$screens.xxl ? "48px" : "36px")};
+    line-height: 24px;
+    height: 24px;
+    margin: 0;
+    
 
-      &::after {
-        display: none;
-      }
+    &::after {
+      display: none;
+    }
 
-      &:hover {
-        color: rgba(255, 255, 255, 0.8) !important;
-      }
+    &:hover {
+      color: rgba(255, 255, 255, 0.8) !important;
     }
   }
 `;
@@ -101,6 +106,44 @@ const LogoWrapper = styled(Row)`
   }
 `;
 
+const MenuButton = styled(Button)`
+  color: #fff;
+  font-size: 20px;
+  background-color: transparent;
+  border: 0;
+  padding: 0;
+
+  &:hover {
+    background-color: transparent !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+  }
+`;
+
+const DrawerContent = styled.div`
+  padding: 16px;
+`;
+
+const DrawerMenu = styled(Menu)`
+  padding-top: 55px;
+  border: none;
+
+  .ant-menu-item {
+    font-family: mulish;
+    text-transform: capitalize;
+    height: 48px;
+    line-height: 48px;
+  }
+`;
+
+const SocialIcons = styled(Row)`
+  padding-top: 48px;
+  gap: 16px;
+`;
+
+const DrawerHeader = styled(Row)`
+  padding: 16px;
+`;
+
 const navItems = ["Home", "Quem Somos", "Serviços", "Galeria", "Testemunhos"];
 
 const Navbar = () => {
@@ -115,23 +158,16 @@ const Navbar = () => {
   const handleScroll = () => {
     const scrollTop = window.pageYOffset;
     const viewHeight = window.innerHeight;
-
-    if (scrollTop > viewHeight) {
-      setAppBarColor("#a4775e");
-    } else {
-      setAppBarColor("transparent");
-    }
+    setAppBarColor(scrollTop > viewHeight ? "#a4775e" : "transparent");
   };
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
-    <Layout>
+    <StyledLayout>
       <StyledHeader $appBarColor={appBarColor} $screens={screens}>
         <NavWrapper
           $appBarColor={appBarColor}
@@ -153,16 +189,7 @@ const Navbar = () => {
           </Col>
 
           <Col style={{ display: screens.lg ? "none" : "block" }}>
-            <Button
-              icon={<MenuOutlined />}
-              onClick={handleDrawerToggle}
-              style={{
-                color: "#fff",
-                fontSize: "20px",
-                backgroundColor: "transparent",
-                border: 0,
-              }}
-            />
+            <MenuButton icon={<MenuOutlined />} onClick={handleDrawerToggle} />
           </Col>
         </NavWrapper>
       </StyledHeader>
@@ -172,7 +199,6 @@ const Navbar = () => {
         closable={true}
         onClose={handleDrawerToggle}
         open={mobileOpen}
-        width="80%"
         closeIcon={<CloseOutlined />}
         styles={{
           body: {
@@ -180,36 +206,22 @@ const Navbar = () => {
           },
         }}
       >
-        <Row justify="space-between" align="middle" style={{ padding: "16px" }}>
+        <DrawerHeader justify="space-between" align="middle">
           <Col>
-            <MobileLogo style={{ width: "100px" }} />
+            <MobileLogo style={{ width: "246px" }} />
           </Col>
           <Col>
             <CloseOutlined onClick={handleDrawerToggle} />
           </Col>
-        </Row>
-        <Menu
-          mode="vertical"
-          style={{
-            paddingTop: "55px",
-            border: "none",
-          }}
-        >
+        </DrawerHeader>
+
+        <DrawerMenu mode="vertical">
           {navItems.map((item) => (
-            <Menu.Item
-              key={item}
-              style={{
-                fontFamily: "mulish",
-                textTransform: "capitalize",
-                height: "48px",
-                lineHeight: "48px",
-              }}
-            >
-              {item}
-            </Menu.Item>
+            <Menu.Item key={item}>{item}</Menu.Item>
           ))}
-        </Menu>
-        <div style={{ padding: "16px" }}>
+        </DrawerMenu>
+
+        <DrawerContent>
           <Typography.Text
             strong
             style={{ display: "block", marginBottom: "16px" }}
@@ -222,14 +234,14 @@ const Navbar = () => {
           <Typography.Text style={{ display: "block" }}>
             Sun: CLOSED
           </Typography.Text>
-          <Row style={{ paddingTop: "48px", gap: "16px" }}>
+          <SocialIcons>
             <FbIcon />
             <InstraIcon />
             <WhatsappIcon />
-          </Row>
-        </div>
+          </SocialIcons>
+        </DrawerContent>
       </Drawer>
-    </Layout>
+    </StyledLayout>
   );
 };
 

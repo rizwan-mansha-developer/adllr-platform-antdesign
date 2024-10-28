@@ -88,7 +88,7 @@ const HeroSection = () => {
             ? "15px"
             : "10px",
           width: "100%",
-          // maxWidth: "1440px", 
+          // maxWidth: "1440px",
         }}
       >
         {/* Title */}
@@ -125,7 +125,7 @@ const HeroSection = () => {
             color: "white",
             fontFamily: "cormorant",
             width: "100%",
-            maxWidth: "634px", 
+            maxWidth: "634px",
             marginBottom: screens.xxl ? "64px" : "24px",
             textTransform: "uppercase",
             fontWeight: 400,
@@ -183,21 +183,23 @@ const HeroSection = () => {
         >
           <HeroSlider SliderContent={SliderContent} />
         </div>
-        {/* <div
-          style={{
-            paddingTop: screens.xxl
-              ? "200px"
-              : screens.xl
-              ? "30px"
-              : screens.lg
-              ? "50px"
-              : "35px",i
-            display: screens.xxl ? "block" : "block",
-            width: screens.lg ? "774px" : screens.xxl && "826px",
-          }}
-        >
-          <ImagesGrid SliderContent={SliderContent} />
-        </div> */}
+        {screens.lg && (
+          <div
+            style={{
+              paddingTop: screens.xxl
+                ? "200px"
+                : screens.xl
+                ? "30px"
+                : screens.lg
+                ? "50px"
+                : "35px",
+              display: screens.xxl ? "block" : "block",
+              width: screens.lg ? "774px" : screens.xxl && "826px",
+            }}
+          >
+            <ImagesGrid SliderContent={SliderContent} />
+          </div>
+        )}
       </div>
     </div>
   );
