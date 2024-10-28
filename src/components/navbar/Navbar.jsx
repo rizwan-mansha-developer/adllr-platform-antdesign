@@ -119,8 +119,7 @@ const MenuButton = styled(Button)`
 `;
 
 const DrawerContent = styled.div`
-  padding: 16px;
-  padding-left: 40px;
+  padding-top: 185px;
 `;
 
 const DrawerMenu = styled(Menu)`
@@ -132,13 +131,15 @@ const DrawerMenu = styled(Menu)`
     text-transform: capitalize;
     height: 48px;
     line-height: 48px;
-    padding-left: 40px;
+    
+    padding-left: ${(props) =>
+      props.$screens && props.$screens.sm ? "60px" : "40px"};
   }
 `;
 
 const SocialIcons = styled(Row)`
   padding-top: 48px;
-  
+
   gap: 16px;
 `;
 
@@ -217,13 +218,13 @@ const Navbar = () => {
           </Col>
         </DrawerHeader>
 
-        <DrawerMenu mode="vertical">
+        <DrawerMenu mode="vertical" $screens={screens}>
           {navItems.map((item) => (
             <Menu.Item key={item}>{item}</Menu.Item>
           ))}
         </DrawerMenu>
 
-        <DrawerContent>
+        <DrawerContent style={{ paddingLeft: screens.sm ? "60px" : "40px" }}>
           <Typography.Text
             strong
             style={{ display: "block", marginBottom: "16px" }}
